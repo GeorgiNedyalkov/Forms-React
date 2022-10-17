@@ -17,6 +17,11 @@ export const FormObject = () => {
     e.preventDefault()
 
     alert(form.email + " " + form.password)
+
+    setForm({
+      email: "",
+      password: "",
+    })
   }
 
   return (
