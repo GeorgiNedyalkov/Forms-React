@@ -5,6 +5,46 @@ const INITIAL_STATE = {
   password: "",
 }
 
+const VALIDATION = {
+  email: [
+    {
+      isValid: (value) => !!value,
+      message: "Is required.",
+    },
+    {
+      isValid: (value) => /\S+@\S+\.\S+/.test(value),
+      message: "Needs to be an email.",
+    },
+  ],
+  password: [
+    {
+      isValid: (value) => !!value,
+      message: "Is required",
+    },
+  ],
+}
+
+const getErrorFields = (form) => {
+  Object.keys(form).reduce((acc, key) => {
+    if (!VALIDATION[key]) return acc
+
+    const errorsPerField = VALIDATION[key]
+      .map((validation) => ({
+        isValid: validation.isValid([form[key]]),
+        message: validation.message,
+      }))
+      .filter((errorsPerField) => !errorsPerField.isValid)
+    return { ...acc, [key]: errorsPerField }
+  }, {})
+}
+
+const getDirtyFields = (form) =>
+  Object.keys(form).reduce((acc, key) => {
+    const isDirty = form[key] !== INITIAL_STATE[key]
+
+    return { ...acc, [key]: isDirty }
+  }, {})
+
 export const FormObject = ({ onLogin }) => {
   const [form, setForm] = useState(INITIAL_STATE)
 
@@ -23,6 +63,13 @@ export const FormObject = ({ onLogin }) => {
 
     setForm(INITIAL_STATE)
   }
+
+  const errorFields = getErrorFields(form)
+  console.log(errorFields)
+
+  const dirtyFields = getDirtyFields(form)
+
+  const hasChanges = Object.values(dirtyFields).every((isDirty) => !isDirty)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -44,7 +91,9 @@ export const FormObject = ({ onLogin }) => {
           onChange={handleChange}
         />
       </div>
-      <button>Submit</button>
+      <button disabled={hasChanges} type="submit">
+        Submit
+      </button>
     </form>
   )
 }
