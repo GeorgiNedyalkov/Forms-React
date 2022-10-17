@@ -15,3 +15,7 @@ We want to read the values from the form.
 In React we can access HTML elements by attaching refences to them using the useRef hook.
 
 We create two references for both inputs. When user clicks the button the onSubmit event starts and excutes the handleSubmit function.
+
+## Controlled React Form
+
+Use React state for each field and controll the onChange handler.
