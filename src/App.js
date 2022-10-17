@@ -11,10 +11,10 @@ function App() {
       <h1>React Forms</h1>
 
       <h3>React Forms with onsubmit</h3>
-      <UncontrolledLoginForm />
+      {/* <UncontrolledLoginForm /> */}
       {/* <Calculator /> */}
       {/* <ControlledLoginForm /> */}
-      {/* <FormObject /> */}
+      <FormObject />
     </div>
   )
 }

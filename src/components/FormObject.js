@@ -1,10 +1,12 @@
 import { useState } from "react"
 
-export const FormObject = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  })
+const INITIAL_STATE = {
+  email: "",
+  password: "",
+}
+
+export const FormObject = ({ onLogin }) => {
+  const [form, setForm] = useState(INITIAL_STATE)
 
   const handleChange = (e) => {
     setForm({
@@ -15,13 +17,11 @@ export const FormObject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     alert(form.email + " " + form.password)
 
-    setForm({
-      email: "",
-      password: "",
-    })
+    onLogin(form)
+
+    setForm(INITIAL_STATE)
   }
 
   return (
